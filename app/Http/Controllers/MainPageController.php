@@ -23,7 +23,6 @@ class MainPageController extends Controller
                 'id' => $coffee->id,
                 'name' => $coffee->name,
                 'price' => $coffee->price,
-                'description' => $coffee->description,
             ]
         ]);
     }
@@ -34,14 +33,12 @@ class MainPageController extends Controller
         $request->validate([
             'name' => 'required|string',
             'price' => 'required|numeric',
-            'description' => 'required|string',
         ]);
 
 
         $coffee = Coffee::create([
             'name' => $request->name,
             'price' => $request->price,
-            'description' => $request->description,
         ]);
 
 
@@ -55,13 +52,11 @@ class MainPageController extends Controller
         $request->validate([
             'name' => 'required|string',
             'price' => 'required|numeric',
-            'description' => 'required|string',
         ]);
 
         $coffee->update([
             'name' => $request->name,
             'price' => $request->price,
-            'description' => $request->description,
         ]);
 
         return response()->json(['coffee' => $coffee]);
