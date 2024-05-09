@@ -9,7 +9,7 @@ class MainPageController extends Controller
 {
     public function index()
     {
-            $coffees = Coffee::all();
+        $coffees = Coffee::all();
 
         return response()->json(['coffees' => $coffees]);
     }

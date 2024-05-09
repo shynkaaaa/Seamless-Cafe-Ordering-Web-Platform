@@ -21,7 +21,6 @@ return new class extends Migration
         DB::table('drinks')->insert([
             ['name' => 'Чай'],
             ['name' => 'Кофе'],
-            ['name' => 'Лимонад'],
         ]);
     }
 
