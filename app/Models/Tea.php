@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Tea extends Model
 {
@@ -11,31 +13,15 @@ class Tea extends Model
 
     protected $fillable = ['name', 'price', 'description'];
 
-    public function size(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    public function size(): BelongsTo
     {
         return $this->belongsTo(Size::class);
     }
 
-    public function toppings(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    public function toppings(): BelongsToMany
     {
-        return $this->belongsToMany(Topping::class);
+        return $this->belongsToMany(Topping::class, 'teas', 'id', 'id');
     }
 
-    public function calculateTotalPrice()
-    {
-        $totalPrice = $this->price; // Accessing the price attribute directly
-
-        // Adjust total price based on the selected size
-        if ($this->size) {
-            $totalPrice += $this->size->price; // Assuming there's a price attribute in the Size model
-        }
-
-        // Add the price of each topping
-        foreach ($this->toppings as $topping) {
-            $totalPrice += $topping->price;
-        }
-
-        return $totalPrice;
-    }
 
 }

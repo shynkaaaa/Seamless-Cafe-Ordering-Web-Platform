@@ -3,27 +3,27 @@
 namespace App\BuilderPattern;
 
 use App\Models\Coffee;
-use App\Models\Size;
-use App\Models\Topping;
 
 class CoffeeBuilder implements DrinkBuilder
 {
     private Coffee $drink;
+    private array $requestData;
 
-    public function __construct()
+    public function __construct(array $requestData)
     {
         $this->drink = new Coffee();
+        $this->requestData = $requestData;
     }
 
     public function addToppings(): void
     {
-        $toppings = Topping::all();
+        $toppings = $this->requestData['toppings'] ?? [];
         $this->drink->toppings()->attach($toppings);
     }
 
     public function addSize(): void
     {
-        $size = Size::where('name', 'Маленький')->first();
+        $size = $this->requestData['size'];
         $this->drink->size()->associate($size);
     }
 
@@ -32,4 +32,3 @@ class CoffeeBuilder implements DrinkBuilder
         return $this->drink;
     }
 }
-
